@@ -29,7 +29,6 @@ var silent = false;
 var theme = 'default';
 
 hexo.extend.filter.register('after_post_render', (data) => {
-  dlog("info", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   const tagEncryptPairs = [];
 
   let password = data.password;
