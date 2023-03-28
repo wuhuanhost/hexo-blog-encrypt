@@ -29,6 +29,7 @@ var silent = false;
 var theme = 'default';
 
 hexo.extend.filter.register('after_post_render', (data) => {
+  dlog("info", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   const tagEncryptPairs = [];
 
   let password = data.password;
@@ -43,7 +44,7 @@ hexo.extend.filter.register('after_post_render', (data) => {
     hexo.config.encrypt = [];
   }
 
-  if(('encrypt' in hexo.config) && ('tags' in hexo.config.encrypt)){
+  if (('encrypt' in hexo.config) && ('tags' in hexo.config.encrypt)) {
     hexo.config.encrypt.tags.forEach((tagObj) => {
       tagEncryptPairs[tagObj.name] = tagObj.password;
     });
@@ -58,7 +59,7 @@ hexo.extend.filter.register('after_post_render', (data) => {
     });
   }
 
-  if(password == undefined){
+  if (password == undefined) {
     return data;
   }
 
@@ -86,7 +87,24 @@ hexo.extend.filter.register('after_post_render', (data) => {
     dlog('info', `hexo-blog-encrypt: encrypting "${data.title.trim()}" based on Tag: "${tagUsed}" with theme ${theme}.`);
   }
 
-  data.content = knownPrefix + data.content.trim();
+
+
+  const matchEncryptedRege = /<\!--encrypted start-->([\s\S]*?)<\!--encrypted end-->/g;//匹配加密标记的正则表达式
+  let sourceStr = "" + knownPrefix;//需要加密的文本
+  const matches = matchEncryptedRege.exec(data.content);//匹配到的需要加密的字符串数组
+  let hasEncryptedTag = false;//默认没有找到加密标签
+  dlog("warn", "===========>>>")
+  if (matches) {
+    //匹配到加密标签,对加密标签内的字符串加密,一篇文章中只能有一对加密字符串标签
+    hasEncryptedTag = true;
+    dlog("info", `匹配到的加密字符串标签:${matches[1]}`);
+    sourceStr += matches[1].trim();
+  } else {
+    //没有匹配到数据,对整个文章进行加密
+    dlog("warn", "===========>>>123")
+    sourceStr += data.content.trim();
+  }
+
   data.encrypt = true;
 
   const key = crypto.pbkdf2Sync(password, keySalt, 1024, 32, 'sha256');
@@ -95,21 +113,38 @@ hexo.extend.filter.register('after_post_render', (data) => {
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
   const hmac = crypto.createHmac('sha256', key);
 
-  let encryptedData = cipher.update(data.content, 'utf8', 'hex');
-  hmac.update(data.content, 'utf8');
+  let encryptedData = cipher.update(sourceStr, 'utf8', 'hex');
+  hmac.update(sourceStr, 'utf8');
   encryptedData += cipher.final('hex');
   const hmacDigest = hmac.digest('hex');
 
-  data.content = template.replace(/{{hbeEncryptedData}}/g, encryptedData)
+  //   dlog("info",sourceStr)
+  dlog("err", encryptedData)
+
+
+  let newDataContent = template.replace(/{{hbeEncryptedData}}/g, encryptedData)
     .replace(/{{hbeHmacDigest}}/g, hmacDigest)
     .replace(/{{hbeWrongPassMessage}}/g, config.wrong_pass_message)
     .replace(/{{hbeWrongHashMessage}}/g, config.wrong_hash_message)
     .replace(/{{hbeMessage}}/g, config.message);
+
+  if (hasEncryptedTag) {
+    data.content = data.content.replace(/<!--encrypted start-->[\s\S]*?<!--encrypted end-->/g, newDataContent)
+  } else {
+    data.content = newDataContent;
+  }
+
+  dlog("warn", data.content)
+
   data.content += `<script data-pjax src="${hexo.config.root}lib/hbe.js"></script><link href="${hexo.config.root}css/hbe.style.css" rel="stylesheet" type="text/css">`;
   data.excerpt = data.more = config.abstract;
 
   return data;
+
 }, 1000);
+
+
+
 
 hexo.extend.generator.register('hexo-blog-encrypt', () => [
   {
@@ -123,7 +158,7 @@ hexo.extend.generator.register('hexo-blog-encrypt', () => [
 ]);
 
 // log function
-function dlog(level, x) {
+function dlog (level, x) {
   switch (level) {
     case 'warn':
       log.warn(x);
@@ -140,7 +175,7 @@ function dlog(level, x) {
 }
 
 // Utils functions
-function textToArray(s) {
+function textToArray (s) {
   var i = s.length;
   var n = 0;
   var ba = new Array()
