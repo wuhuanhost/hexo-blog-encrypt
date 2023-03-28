@@ -87,21 +87,17 @@ hexo.extend.filter.register('after_post_render', (data) => {
     dlog('info', `hexo-blog-encrypt: encrypting "${data.title.trim()}" based on Tag: "${tagUsed}" with theme ${theme}.`);
   }
 
-
-
   const matchEncryptedRege = /<\!--encrypted start-->([\s\S]*?)<\!--encrypted end-->/g;//匹配加密标记的正则表达式
   let sourceStr = "" + knownPrefix;//需要加密的文本
   const matches = matchEncryptedRege.exec(data.content);//匹配到的需要加密的字符串数组
   let hasEncryptedTag = false;//默认没有找到加密标签
-  dlog("warn", "===========>>>")
   if (matches) {
     //匹配到加密标签,对加密标签内的字符串加密,一篇文章中只能有一对加密字符串标签
     hasEncryptedTag = true;
-    dlog("info", `匹配到的加密字符串标签:${matches[1]}`);
+    // dlog("info", `匹配到的加密字符串标签:${matches[1]}`);
     sourceStr += matches[1].trim();
   } else {
     //没有匹配到数据,对整个文章进行加密
-    dlog("warn", "===========>>>123")
     sourceStr += data.content.trim();
   }
 
@@ -119,7 +115,7 @@ hexo.extend.filter.register('after_post_render', (data) => {
   const hmacDigest = hmac.digest('hex');
 
   //   dlog("info",sourceStr)
-  dlog("err", encryptedData)
+  // dlog("err", encryptedData)
 
 
   let newDataContent = template.replace(/{{hbeEncryptedData}}/g, encryptedData)
@@ -134,7 +130,7 @@ hexo.extend.filter.register('after_post_render', (data) => {
     data.content = newDataContent;
   }
 
-  dlog("warn", data.content)
+  // dlog("warn", data.content)
 
   data.content += `<script data-pjax src="${hexo.config.root}lib/hbe.js"></script><link href="${hexo.config.root}css/hbe.style.css" rel="stylesheet" type="text/css">`;
   data.excerpt = data.more = config.abstract;
