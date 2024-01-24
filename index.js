@@ -117,7 +117,7 @@ hexo.extend.filter.register('after_post_render', (data) => {
   //   dlog("info",sourceStr)
   // dlog("err", encryptedData)
 
-  console.log(template)
+  // console.log(template)
   let newDataContent = template.replace(/{{hbeEncryptedData}}/g, encryptedData)
     .replace(/{{hbeHmacDigest}}/g, hmacDigest)
     .replace(/{{hbeWrongPassMessage}}/g, config.wrong_pass_message)
