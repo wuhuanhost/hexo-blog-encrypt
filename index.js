@@ -29,6 +29,7 @@ var silent = false;
 var theme = 'default';
 
 hexo.extend.filter.register('after_post_render', (data) => {
+  dlog("info", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   const tagEncryptPairs = [];
 
   let password = data.password;
@@ -116,12 +117,15 @@ hexo.extend.filter.register('after_post_render', (data) => {
   //   dlog("info",sourceStr)
   // dlog("err", encryptedData)
 
-
+  console.log(template)
   let newDataContent = template.replace(/{{hbeEncryptedData}}/g, encryptedData)
     .replace(/{{hbeHmacDigest}}/g, hmacDigest)
     .replace(/{{hbeWrongPassMessage}}/g, config.wrong_pass_message)
     .replace(/{{hbeWrongHashMessage}}/g, config.wrong_hash_message)
-    .replace(/{{hbeMessage}}/g, config.message);
+    .replace(/{{hbeMessage}}/g, config.message)
+    .replace(/{{weixinImage}}/g, hexo.config.weixin_gongzhonghao_image)
+    .replace(/{{hbeWeixinCode}}/g, config.weixin_keyword)
+    ;
 
   if (hasEncryptedTag) {
     data.content = data.content.replace(/<!--encrypted start-->[\s\S]*?<!--encrypted end-->/g, newDataContent)
@@ -153,7 +157,7 @@ hexo.extend.generator.register('hexo-blog-encrypt', () => [
 ]);
 
 // log function
-function dlog (level, x) {
+function dlog(level, x) {
   switch (level) {
     case 'warn':
       log.warn(x);
@@ -170,7 +174,7 @@ function dlog (level, x) {
 }
 
 // Utils functions
-function textToArray (s) {
+function textToArray(s) {
   var i = s.length;
   var n = 0;
   var ba = new Array()

@@ -1,0 +1,22 @@
+<div class="hbe-theme-weixin">
+  <div class="hbe-blur">
+  </div>
+  <div class="hbe-tips" id="hbe-tips">{{hbeMessage}}</div>
+  <div class="hbe-container-mask" id="hbe-container-mask"></div>
+  <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="{{hbeWrongPassMessage}}"
+    data-whm="{{hbeWrongHashMessage}}">
+    <script id="hbeData" type="hbeData" data-hmacdigest="{{hbeHmacDigest}}">{{hbeEncryptedData}}</script>
+    <div class="hbe hbe-content" id="hbe-content">
+      <p><img src="{{weixinImage}}"></p>
+      <div class="hbe-message">微信扫描上方二维码关注后,回复:【<span>{{hbeWeixinCode}}</span>】继续阅读</div>
+      <div class="hbe hbe-input hbe-input-blink">
+        <input class="hbe hbe-input-field hbe-input-field-blink" type="password" id="hbePass">
+        <div class="btn" id="read-more">继续</div>
+        <!-- <label class="hbe hbe-input-label hbe-input-label-blink" for="hbePass">
+          <span class="hbe hbe-input-label-content hbe-input-label-content-blink"
+            data-content="{{hbeMessage}}">{{hbeMessage}}</span>
+        </label> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -773,3 +773,237 @@
 }
 
 /* shrink theme }}} */
+
+
+/* weixin 主题 */
+[data-theme="light"] .hbe-theme-weixin {
+	position: relative;
+	top: -100px;
+	width: 100%;
+	height: 200px;
+}
+
+[data-theme="light"] .hbe-container-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 101;
+	display: none;
+}
+
+[data-theme="light"] .hbe-blur {
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	/* backdrop-filter: blur(3px); */
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), #ffffff);
+}
+
+[data-theme="light"] .hbe-tips {
+	position: absolute;
+	width: 300px;
+	height: 40px;
+	top: 100px;
+	background-color: #49B1F5;
+	text-align: center;
+	cursor: pointer;
+	color: #ffffff;
+	line-height: 40px;
+	margin-left: calc((100% - 300px) / 2);
+	z-index: 100;
+	border-radius: 5px;
+
+}
+
+
+[data-theme="light"] .hbe-container {
+	display: none;
+	width: 300px;
+	height: 410px;
+	z-index: 102;
+	background-color: #ffffff;
+	position: fixed;
+	top: 20vh;
+	left: calc((100% - 300px) / 2);
+	border-radius: 20px;
+}
+
+[data-theme="light"] .hbe-content p {
+	text-align: center;
+}
+
+[data-theme="light"] .hbe-content p img {
+	width: 258px;
+	height: 258px;
+	/* border: 2px solid #8781bd; */
+}
+
+[data-theme="light"] .hbe-input {
+	box-sizing: border-box;
+	padding: 0;
+	min-width: unset;
+	width: 230px;
+	height: 40px;
+	margin: 5px auto;
+	display: flex;
+	flex-direction: row;
+}
+
+[data-theme="light"] .hbe-input input {
+	flex: 1;
+	height: 40px;
+	padding: 0;
+	border-radius: 2px;
+	text-indent: 2px;
+}
+
+[data-theme="light"] .hbe-input .btn {
+	width: 50px;
+	height: 40px;
+	font-size: 14px;
+	margin: 0;
+	margin-left: 10px;
+	text-align: center;
+	line-height: 40px;
+	background-color: #8781bd;
+	color: #ffffff;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+[data-theme="light"] .hbe-message {
+	width: 230px;
+	text-align: justify;
+	font-size: 14px;
+	margin: 0 auto;
+	margin-top: -25px;
+}
+
+[data-theme="light"] .hbe-message span {
+	font-weight: 500;
+	color: #8781bd;
+}
+
+
+
+
+/* 暗色主题 */
+
+[data-theme="dark"] .hbe-theme-weixin {
+	position: relative;
+	top: -100px;
+	width: 100%;
+	height: 200px;
+}
+
+[data-theme="dark"] .hbe-container-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 101;
+	display: none;
+}
+
+[data-theme="dark"] .hbe-blur {
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	/* backdrop-filter: blur(3px); */
+	background: linear-gradient(to bottom, rgba(18, 18, 18, 0.5), #121212);
+}
+
+[data-theme="dark"] .hbe-tips {
+	position: absolute;
+	width: 300px;
+	height: 40px;
+	top: 100px;
+	background-color: #1F1F1F;
+	text-align: center;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.7);
+	line-height: 40px;
+	margin-left: calc((100% - 300px) / 2);
+	z-index: 100;
+	border-radius: 5px;
+
+}
+
+
+[data-theme="dark"] .hbe-container {
+	display: none;
+	width: 300px;
+	height: 410px;
+	z-index: 102;
+	background-color: #CCCCCC;
+	position: fixed;
+	top: 20vh;
+	left: calc((100% - 300px) / 2);
+	border-radius: 20px;
+}
+
+[data-theme="dark"] .hbe-content p {
+	text-align: center;
+}
+
+[data-theme="dark"] .hbe-content p img {
+	width: 258px;
+	height: 258px;
+	/* border: 2px solid #8781bd; */
+}
+
+[data-theme="dark"] .hbe-input {
+	box-sizing: border-box;
+	padding: 0;
+	min-width: unset;
+	width: 230px;
+	height: 40px;
+	margin: 5px auto;
+	display: flex;
+	flex-direction: row;
+}
+
+[data-theme="dark"] .hbe-input input {
+	flex: 1;
+	height: 40px;
+	padding: 0;
+	border-radius: 2px;
+	text-indent: 2px;
+}
+
+[data-theme="dark"] .hbe-input .btn {
+	width: 50px;
+	height: 40px;
+	font-size: 14px;
+	margin: 0;
+	margin-left: 10px;
+	text-align: center;
+	line-height: 40px;
+	background-color: #8781bd;
+	color: #ffffff;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+[data-theme="dark"] .hbe-message {
+	width: 230px;
+	text-align: justify;
+	font-size: 14px;
+	margin: 0 auto;
+	margin-top: -25px;
+	color: #121212;
+}
+
+[data-theme="dark"] .hbe-message span {
+	font-weight: 500;
+	color: #8781bd;
+}
